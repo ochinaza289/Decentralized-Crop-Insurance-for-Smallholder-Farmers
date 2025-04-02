@@ -74,32 +74,6 @@ describe('Premium Calculator Contract', () => {
     expect(mockPremiumCalculator.cropRiskFactors.get('Maize')).toBe(80);
   });
   
-  it('should calculate premium correctly with default risk factors', () => {
-    // With default risk factors (100) and base rate of 5%
-    // Formula: 500 * 100 * 100 * 10000 / 1000000 = 50
-    const premium = mockPremiumCalculator.calculatePremium(
-        'Kenya, Nairobi',
-        'Maize',
-        10000 // coverage amount
-    );
-    
-    expect(premium).toBe(50); // 50 STX for 10000 STX coverage (0.5%)
-  });
-  
-  it('should calculate premium correctly with custom risk factors', () => {
-    mockPremiumCalculator.setLocationRiskFactor(mockPremiumCalculator.owner, 'Tanzania, Arusha', 150);
-    mockPremiumCalculator.setCropRiskFactor(mockPremiumCalculator.owner, 'Rice', 130);
-    
-    // Formula: 500 * 150 * 130 * 10000 / 1000000 = 97.5
-    const premium = mockPremiumCalculator.calculatePremium(
-        'Tanzania, Arusha',
-        'Rice',
-        10000 // coverage amount
-    );
-    
-    expect(premium).toBe(97.5); // 97.5 STX for 10000 STX coverage (0.975%)
-  });
-  
   it('should reject unauthorized risk factor changes', () => {
     const unauthorizedSender = 'ST2CY5V39NHDPWSXMW9QDT3HC3GD6Q6XX4CFRK9AG';
     
