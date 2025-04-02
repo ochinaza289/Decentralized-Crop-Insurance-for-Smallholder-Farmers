@@ -1,30 +1,44 @@
+;; farmer-registry.clar
+;; Records details of small agricultural operations
 
-;; title: farmer-registry
-;; version:
-;; summary:
-;; description:
+(define-data-var last-farmer-id uint u0)
 
-;; traits
-;;
+(define-map farmers
+  { farmer-id: uint }
+  {
+    name: (string-utf8 100),
+    location: (string-utf8 100),
+    crop-type: (string-utf8 50),
+    farm-size: uint,
+    registered-at: uint
+  }
+)
 
-;; token definitions
-;;
+(define-public (register-farmer
+    (name (string-utf8 100))
+    (location (string-utf8 100))
+    (crop-type (string-utf8 50))
+    (farm-size uint))
+  (let ((farmer-id (+ (var-get last-farmer-id) u1)))
+    (var-set last-farmer-id farmer-id)
+    (map-set farmers
+      { farmer-id: farmer-id }
+      {
+        name: name,
+        location: location,
+        crop-type: crop-type,
+        farm-size: farm-size,
+        registered-at: block-height
+      }
+    )
+    (ok farmer-id)
+  )
+)
 
-;; constants
-;;
+(define-read-only (get-farmer (farmer-id uint))
+  (map-get? farmers { farmer-id: farmer-id })
+)
 
-;; data vars
-;;
-
-;; data maps
-;;
-
-;; public functions
-;;
-
-;; read only functions
-;;
-
-;; private functions
-;;
-
+(define-read-only (get-farmer-count)
+  (var-get last-farmer-id)
+)
