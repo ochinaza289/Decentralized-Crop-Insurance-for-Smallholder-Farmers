@@ -1,0 +1,29 @@
+[project]
+name = 'Decentralized-Crop-Insurance-for-Smallholder-Farmers'
+description = ''
+authors = []
+telemetry = true
+cache_dir = './.cache'
+requirements = []
+[contracts.farmer-registry]
+path = 'contracts/farmer-registry.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.premium-calculator]
+path = 'contracts/premium-calculator.clar'
+clarity_version = 2
+epoch = 2.5
+
+[contracts.weather-oracle]
+path = 'contracts/weather-oracle.clar'
+clarity_version = 2
+epoch = 2.5
+[repl.analysis]
+passes = ['check_checker']
+
+[repl.analysis.check_checker]
+strict = false
+trusted_sender = false
+trusted_caller = false
+callee_filter = false
